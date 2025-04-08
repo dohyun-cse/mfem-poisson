@@ -18,6 +18,8 @@ SparseMatrix ToRowMatrix(LinearForm &lf)
    return SparseMatrix(i, j, data, size, 1, true, false, true);
 }
 
+
+#ifdef MFEM_USE_MPI
 HypreParMatrix *ToRowParMatrix(ParLinearForm &lf)
 {
    ParFiniteElementSpace *pfes = lf.ParFESpace();
@@ -52,6 +54,7 @@ HypreParMatrix *ToRowParMatrix(ParLinearForm &lf)
                          i.GetData(), j.GetData(), d.GetData(),
                          pfes->GetTrueDofOffsets(), cols.GetData()).Transpose();
 }
+#endif
 
 MassZeroOperator::MassZeroOperator(Operator &op, LinearForm &mass_op,
                                    bool reassemble, int offset)
